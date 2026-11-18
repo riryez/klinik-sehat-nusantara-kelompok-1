@@ -1,0 +1,9 @@
+html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+/* Elemen yang dikendalikan Alpine tidak muncul sebelum siap. */
+[x-cloak] { display: none !important; }

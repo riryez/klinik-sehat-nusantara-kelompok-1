@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id" x-data="klinikTheme()" :class="{ 'dark': darkMode }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin — Klinik Sehat Nusantara</title>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/theme.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300" x-data="klinikAdmin()">
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-20 flex items-center justify-between gap-3 py-3">
+            <a href="index.html" class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center text-white"><i class="fa-solid fa-hospital"></i></span>
+                <span><strong class="block text-sm sm:text-lg text-slate-900 dark:text-white">Klinik Sehat Nusantara</strong><small class="text-slate-500 dark:text-slate-400">Dashboard Admin · Demo</small></span>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="text-xs sm:text-sm font-semibold text-brand-600 dark:text-brand-300">← Halaman Pasien</a>
+                <button type="button" @click="toggleDarkMode()" :aria-label="darkMode ? 'Mode gelap' : 'Mode terang'" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800" aria-label="Ubah tema">
+                    <i class="fa-solid" :class="darkMode ? 'fa-moon text-blue-300' : 'fa-sun text-amber-500'"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="text-xs uppercase tracking-widest font-bold text-brand-600 dark:text-brand-300">Pemantauan Pendaftaran</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold mt-2 text-slate-900 dark:text-white">Dashboard Admin</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Ringkasan antrean dan pendaftaran pasien pada browser ini.</p>
+            </div>
+            <button type="button" @click="refresh()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="fa-solid fa-rotate-right mr-2"></i>Segarkan</button>
+        </div>
+        <div class="demo-banner" role="note"><i class="fa-solid fa-circle-info"></i><span>Mode demo menggunakan localStorage. Tidak ada login atau sinkronisasi lintas perangkat. Gunakan data fiktif, bukan NIK atau informasi kesehatan pasien asli.</span></div>
+        <div x-show="error" x-text="error" role="alert" class="p-4 rounded-xl bg-rose-50 text-rose-700 text-sm"></div>
+        <section class="stats-grid" aria-label="Statistik antrean">
+            <div class="stat-card"><span>Total Antrean</span><strong x-text="rows.length"></strong><small>Semua data tersimpan</small></div>
+            <div class="stat-card"><span>Kunjungan Hari Ini</span><strong x-text="todayCount"></strong><small>Untuk tanggal hari ini</small></div>
+            <div class="stat-card"><span>Menunggu</span><strong x-text="waitingCount"></strong><small>Belum dipanggil</small></div>
+            <div class="stat-card"><span>Selesai</span><strong x-text="finishedCount"></strong><small>Telah dilayani</small></div>
+        </section>
+        <section class="admin-panel" aria-labelledby="queue-title">
+            <div class="admin-panel-header">
+                <div><h2 id="queue-title" class="text-xl font-bold">Daftar Antrean</h2><p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Filter dan perbarui status antrean di browser ini.</p></div>
+                <span class="text-sm text-slate-500" x-text="filteredRows.length + ' data'"></span>
+            </div>
+            <div class="filter-grid">
+                <label>Cari nama / antrean<input type="search" x-model="search" placeholder="Cari pasien atau UMUM-001" aria-label="Cari pasien atau antrean"></label>
+                <label>Tanggal kunjungan<input type="date" x-model="filterDate"></label>
+                <label>Poliklinik<select x-model="filterPoli"><option value="">Semua Poli</option><template x-for="doctor in doctors" :key="doctor.id"><option :value="doctor.poli" x-text="doctor.poli"></option></template></select></label>
+                <label>Status<select x-model="filterStatus"><option value="">Semua Status</option><option>Menunggu</option><option>Dipanggil</option><option>Selesai</option><option>Batal</option></select></label>
+            </div>
+            <div class="admin-table-wrap">
+                <table class="admin-table"><thead><tr><th>Nomor</th><th>Pasien</th><th>Poliklinik & Dokter</th><th>Kunjungan</th><th>Status</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        <template x-for="item in filteredRows" :key="item.id">
+                            <tr>
+                                <td><strong x-text="item.noAntrean"></strong></td>
+                                <td><span x-text="item.nama || 'Antrean cepat'"></span><small x-text="item.jenis || ''"></small></td>
+                                <td><span x-text="item.poliklinik"></span><small x-text="item.dokter || '-'"></small></td>
+                                <td x-text="item.tanggalKunjungan"></td>
+                                <td><span class="status-pill" :class="'status-' + item.status.toLowerCase()" x-text="item.status"></span></td>
+                                <td><select :aria-label="'Ubah status ' + item.noAntrean" :value="item.status" @change="changeStatus(item.id, $event.target.value)"><option>Menunggu</option><option>Dipanggil</option><option>Selesai</option><option>Batal</option></select></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <p x-show="filteredRows.length === 0" class="text-center text-sm py-10 text-slate-500">Belum ada antrean sesuai filter.</p>
+            </div>
+        </section>
+        <section class="admin-panel" aria-labelledby="doctor-title"><div class="admin-panel-header"><div><h2 id="doctor-title" class="text-xl font-bold">Jadwal Tenaga Medis</h2><p class="text-xs text-slate-500 mt-1">Daftar dokter diambil dari array JavaScript yang sama dengan halaman pasien.</p></div></div><div class="doctor-grid"><template x-for="doc in doctors" :key="doc.id"><div class="doctor-mini"><img :src="doc.image" :alt="doc.name"><div><strong x-text="doc.name"></strong><p x-text="doc.poli"></p><small x-text="doc.days + ' · ' + doc.hours"></small></div></div></template></div></section>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

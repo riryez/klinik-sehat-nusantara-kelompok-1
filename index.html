@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="id" x-data="klinikTheme()" :class="{ 'dark': darkMode }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klinik Sehat Nusantara - Kediri, Jawa Timur</title>
+    <!-- Bootstrap dan Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css">
+
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/theme.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300" x-data="klinikApp()">
+
+    <!-- Top Navigation / Header -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Location -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-hospital text-xl"></i>
+                </div>
+                <div>
+                    <a href="#beranda" class="text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                        Klinik Sehat Nusantara
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Kediri, Jawa Timur</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#beranda" class="text-brand-600 dark:text-brand-400 hover:text-brand-700 transition">Beranda</a>
+                <a href="#layanan" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition">Layanan</a>
+                <a href="#tenaga-medis" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition">Tenaga Medis</a>
+                <a href="#pendaftaran" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition">Pendaftaran</a>
+            </nav>
+
+            <!-- Right Actions: Dark Mode & CTA -->
+            <div class="flex items-center space-x-4">
+                <!-- Dark Mode Toggle Button -->
+                <button type="button" @click="toggleDarkMode()" :aria-label="darkMode ? 'Mode gelap aktif, ubah ke mode terang' : 'Mode terang aktif, ubah ke mode gelap'" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-sm">
+                    <i class="fa-solid text-lg" :class="darkMode ? 'fa-moon text-blue-300' : 'fa-sun text-amber-500'" aria-hidden="true"></i>
+                </button>
+
+                <!-- Daftar Online CTA Button -->
+                <a href="#pendaftaran" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm shadow-lg hover:shadow-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition">
+                    Daftar Online
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container App -->
+    <main class="space-y-16 pb-20">
+
+        <!-- Hero Section -->
+        <section id="beranda" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <p class="text-sm font-semibold text-brand-600 dark:text-brand-300" x-text="greeting"></p>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-slate-800 text-brand-700 dark:text-brand-300 text-xs font-semibold uppercase tracking-wider border border-brand-100 dark:border-slate-700">
+                        <i class="fa-solid fa-shield-heart text-brand-500"></i> Mitra Kesehatan Keluarga Terpercaya di Kediri
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+                        Kemudahan Akses Medis Keluarga dalam <span class="text-brand-600 dark:text-brand-400">Satu Genggaman</span>.
+                    </h1>
+                    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+                        Jadwalkan kunjungan, pilih dokter pilihan Anda, dan dapatkan nomor antrean dari rumah. Solusi berobat yang lebih teratur untuk seluruh keluarga.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#pendaftaran" class="px-7 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
+                            Daftar Berobat Sekarang <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#tenaga-medis" class="px-7 py-3.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                            Lihat Tenaga Medis
+                        </a>
+                    </div>
+
+                    <!-- Avatar Stack -->
+                    <div class="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                        <div class="flex -space-x-3 overflow-hidden">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover" src="images/dr-arka.jpg" alt="dr. Arka">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover" src="images/drg-kirana.jpg" alt="drg. Kirana">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover" src="images/bdn-larasati.jpg" alt="Bdn. Larasati">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover" src="images/nutr-danendra.jpg" alt="Nutr. Danendra">
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-semibold text-slate-900 dark:text-white">
+                                <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">AM</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">KM</span>
+                                <span class="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300">LP</span>
+                                <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">DP</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1"><strong class="text-slate-700 dark:text-slate-300">4 Tenaga Medis</strong> • Siap melayani keluarga Anda</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Hero Live Queue Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl border border-slate-200 dark:border-slate-700 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                            Live Status
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Status Klinik Hari Ini</p>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center justify-between mt-1">
+                                Operasional & Antrean Live
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Buka Sekarang
+                                </span>
+                            </h3>
+                        </div>
+
+                        <div class="space-y-3 my-6">
+                            <!-- Poli 1 -->
+                            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900 text-brand-600 dark:text-brand-300 font-bold text-sm flex items-center justify-center">01</span>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Poli Umum</h4>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">dr. Arka Mahardika</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">Tersedia</span>
+                            </div>
+
+                            <!-- Poli 2 -->
+                            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900 text-brand-600 dark:text-brand-300 font-bold text-sm flex items-center justify-center">02</span>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Poli Gigi</h4>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">drg. Kirana Maharani</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">Tersedia</span>
+                            </div>
+
+                            <!-- Poli 3 -->
+                            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900 text-brand-600 dark:text-brand-300 font-bold text-sm flex items-center justify-center">03</span>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Poli KIA & Kebidanan</h4>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">Bdn. Larasati Pertiwi</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">Tersedia</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA inside card -->
+                        <div class="pt-2">
+                            <p class="text-xs text-slate-400 mb-2">Tanpa Antre Lama di Ruang Tunggu</p>
+                            <button @click="openQueueModal()" class="w-full py-3 px-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition flex items-center justify-center gap-2 shadow">
+                                Ambil Nomor Antrean Digital <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layanan Kami Section -->
+        <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest">Layanan Kami</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">Poliklinik & Layanan Medis</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">Kami menyediakan 4 poliklinik utama yang didukung tenaga profesional dan berdedikasi tinggi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/50 text-brand-600 dark:text-brand-300 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <span class="text-slate-300 dark:text-slate-600 font-mono text-lg font-bold">01</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Poli Umum</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Pemeriksaan kesehatan menyeluruh untuk anak, dewasa, hingga lansia.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <button @click="showServiceDetail('Poli Umum', 'Pemeriksaan kesehatan umum, diagnosis penyakit ringan hingga sedang, rujukan spesialis, serta surat keterangan sehat.')" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+                            Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/50 text-brand-600 dark:text-brand-300 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-tooth"></i>
+                            </div>
+                            <span class="text-slate-300 dark:text-slate-600 font-mono text-lg font-bold">02</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Poli Gigi</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Perawatan gigi dan mulut dengan tindakan yang nyaman dan aman.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <button @click="showServiceDetail('Poli Gigi', 'Scaling pembersihan karang gigi, penambalan estetika, pencabutan gigi, serta konsultasi ortodonsi.')" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+                            Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/50 text-brand-600 dark:text-brand-300 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-baby"></i>
+                            </div>
+                            <span class="text-slate-300 dark:text-slate-600 font-mono text-lg font-bold">03</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Poli KIA & Kebidanan</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Pendampingan kesehatan ibu dan tumbuh kembang buah hati.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <button @click="showServiceDetail('Poli KIA & Kebidanan', 'Pemeriksaan Kehamilan (ANC), Imunisasi Bayi & Balita, Konsultasi Keluarga Berencana (KB), serta deteksi dini tumbuh kembang.')" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+                            Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/50 text-brand-600 dark:text-brand-300 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-apple-whole"></i>
+                            </div>
+                            <span class="text-slate-300 dark:text-slate-600 font-mono text-lg font-bold">04</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Konsultasi Gizi</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Program gizi personal untuk hidup lebih sehat dan seimbang.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <button @click="showServiceDetail('Konsultasi Gizi', 'Diet khusus penyakit kronis, pencegahan stunting anak, manajemen berat badan ideal, serta analisis komposisi tubuh.')" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+                            Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tindakan Medis yang Tersedia Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="text-center mb-8">
+                    <span class="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest">Pelayanan Komprehensif</span>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">Tindakan Medis yang Tersedia</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Poli Umum Actions -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-stethoscope text-brand-500"></i> Poli Umum
+                        </h3>
+                        <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pemeriksaan Fisik & Diagnosis</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Surat Keterangan Sehat</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Cek Gula Darah & Kolesterol</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Nebulizer & Oksigen</li>
+                        </ul>
+                    </div>
+
+                    <!-- Poli Gigi Actions -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-tooth text-brand-500"></i> Poli Gigi
+                        </h3>
+                        <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pembersihan Karang Gigi (Scaling)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Penambalan Estetik</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pencabutan Gigi</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Konsultasi Ortodonsi</li>
+                        </ul>
+                    </div>
+
+                    <!-- Poli KIA Actions -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-baby-carriage text-brand-500"></i> Poli KIA & Kebidanan
+                        </h3>
+                        <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pemeriksaan Kehamilan (ANC)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Imunisasi Bayi & Balita</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Konsultasi Keluarga Berencana</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Deteksi Dini Tumbuh Kembang</li>
+                        </ul>
+                    </div>
+
+                    <!-- Konsultasi Gizi Actions -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-carrot text-brand-500"></i> Konsultasi Gizi
+                        </h3>
+                        <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Diet Khusus Penyakit Kronis</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Manajemen Berat Badan Ideal</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pencegahan Stunting Anak</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Analisis Komposisi Tubuh</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tenaga Medis Section -->
+        <section id="tenaga-medis" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest">Dokter & Spesialis</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Tenaga Medis</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">4 tenaga medis • 4 poliklinik</p>
+                </div>
+
+                <!-- View & Filter Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <!-- Toggle View: Kartu Foto vs Tabel Jadwal -->
+                    <div class="inline-flex rounded-xl bg-slate-200 dark:bg-slate-800 p-1">
+                        <button @click="viewMode = 'kartu'" :class="viewMode === 'kartu' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-400'" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-id-card mr-1"></i> Kartu Foto
+                        </button>
+                        <button @click="viewMode = 'tabel'" :class="viewMode === 'tabel' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-400'" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-table mr-1"></i> Tabel Jadwal
+                        </button>
+                    </div>
+
+                    <!-- Interactive Toggle Button: Hide/Show Schedule Table -->
+                    <template x-if="viewMode === 'tabel'">
+                        <button @click="showScheduleTable = !showScheduleTable" class="px-3.5 py-1.5 rounded-xl bg-brand-50 dark:bg-slate-800 border border-brand-200 dark:border-slate-700 text-brand-700 dark:text-brand-300 text-xs font-semibold hover:bg-brand-100 transition flex items-center gap-1.5">
+                            <i class="fa-solid" :class="showScheduleTable ? 'fa-eye-slash' : 'fa-eye'"></i>
+                            <span x-text="showScheduleTable ? 'Sembunyikan Tabel Jadwal' : 'Tampilkan Tabel Jadwal'"></span>
+                        </button>
+                    </template>
+
+                    <!-- Poliklinik Filter Dropdown -->
+                    <div class="relative">
+                        <select x-model="selectedFilter" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs rounded-xl px-3.5 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="Semua">Poliklinik: Semua</option>
+                            <option value="Poli Umum">Poli Umum</option>
+                            <option value="Poli Gigi">Poli Gigi</option>
+                            <option value="Poli KIA">Poli KIA</option>
+                            <option value="Konsultasi Gizi">Konsultasi Gizi</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 1: Kartu Foto Mode -->
+            <div x-show="viewMode === 'kartu'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <template x-for="doc in filteredDoctors" :key="doc.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between hover:shadow-md transition">
+                        <div>
+                            <div class="relative h-56 bg-slate-100 dark:bg-slate-900">
+                                <img :src="doc.image" :alt="doc.name" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500 text-white shadow">
+                                    <i class="fa-solid fa-circle text-[6px] mr-1"></i> Tersedia Hari Ini
+                                </span>
+                            </div>
+                            <div class="p-5 space-y-2">
+                                <span class="inline-block px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-900/40 text-brand-600 dark:text-brand-300 text-xs font-semibold" x-text="doc.poli"></span>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white" x-text="doc.name"></h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> <span x-text="doc.days"></span></p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400"><i class="fa-regular fa-clock mr-1"></i> <span x-text="doc.hours"></span></p>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <button @click="selectDoctor(doc)" class="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs hover:bg-slate-800 dark:hover:bg-slate-100 transition shadow">
+                                Pilih Jadwal
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- View 2: Tabel Jadwal Mode -->
+            <div x-show="viewMode === 'tabel'" x-transition class="space-y-4">
+                <!-- Collapsible Table Container -->
+                <div x-show="showScheduleTable" x-transition class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-900/80 text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
+                                    <th class="p-4 font-semibold">TENAGA MEDIS</th>
+                                    <th class="p-4 font-semibold">POLIKLINIK</th>
+                                    <th class="p-4 font-semibold">HARI PRAKTIK</th>
+                                    <th class="p-4 font-semibold">JAM PRAKTIK</th>
+                                    <th class="p-4 font-semibold text-right">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+                                <template x-for="doc in filteredDoctors" :key="doc.id">
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition">
+                                        <td class="p-4 font-semibold text-slate-900 dark:text-white flex items-center gap-3">
+                                            <img :src="doc.image" class="w-9 h-9 rounded-full object-cover" alt="">
+                                            <div>
+                                                <div x-text="doc.name"></div>
+                                                <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-normal">● Tersedia Hari Ini</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-4">
+                                            <span class="px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-900/40 text-brand-600 dark:text-brand-300 font-medium" x-text="doc.poli"></span>
+                                        </td>
+                                        <td class="p-4 text-slate-600 dark:text-slate-300" x-text="doc.days"></td>
+                                        <td class="p-4 text-slate-600 dark:text-slate-300" x-text="doc.hours"></td>
+                                        <td class="p-4 text-right">
+                                            <button @click="selectDoctor(doc)" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs hover:bg-slate-800 transition shadow">
+                                                Pilih Jadwal
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Hidden Table Notice -->
+                <div x-show="!showScheduleTable" class="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-3"><i class="fa-solid fa-eye-slash mr-2"></i> Tabel jadwal sedang disembunyikan.</p>
+                    <button @click="showScheduleTable = true" class="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-semibold hover:bg-brand-700 transition">
+                        Tampilkan Kembali Tabel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule info notice note -->
+            <div class="mt-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 flex items-center gap-3 text-xs text-blue-800 dark:text-blue-300">
+                <i class="fa-solid fa-circle-info text-brand-500 text-base"></i>
+                <span>Jadwal dapat berubah. Konfirmasi ketersediaan melalui <strong>0354–123456</strong> sebelum berkunjung.</span>
+            </div>
+        </section>
+
+        <!-- Pertanyaan yang Sering Diajukan (FAQ) Section -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest">Informasi Pasien</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Pertanyaan yang Sering Diajukan</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Temukan informasi penting sebelum melakukan kunjungan ke klinik kami. Klik pertanyaan untuk melihat detail jawaban.</p>
+            </div>
+
+            <div class="space-y-4" x-data="{ activeFaq: null }">
+                <!-- FAQ 1 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                    <button @click="activeFaq = activeFaq === 1 ? null : 1" class="w-full p-5 text-left font-semibold text-slate-900 dark:text-white flex items-center justify-between text-sm sm:text-base">
+                        <span class="flex items-center gap-3"><span class="text-brand-500 font-mono">01</span> Apakah klinik melayani pasien BPJS Kesehatan?</span>
+                        <i class="fa-solid fa-plus transition-transform duration-200" :class="activeFaq === 1 ? 'rotate-45 text-brand-500' : ''"></i>
+                    </button>
+                    <div x-show="activeFaq === 1" x-transition class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                        Ya, Klinik Pratama Sehat Nusantara merupakan fasilitas kesehatan tingkat pertama (FKTP). Pastikan klinik kami terdaftar sebagai faskes pilihan Anda dan status kepesertaan BPJS aktif.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                    <button @click="activeFaq = activeFaq === 2 ? null : 2" class="w-full p-5 text-left font-semibold text-slate-900 dark:text-white flex items-center justify-between text-sm sm:text-base">
+                        <span class="flex items-center gap-3"><span class="text-brand-500 font-mono">02</span> Bagaimana cara mendaftar berobat secara online?</span>
+                        <i class="fa-solid fa-plus transition-transform duration-200" :class="activeFaq === 2 ? 'rotate-45 text-brand-500' : ''"></i>
+                    </button>
+                    <div x-show="activeFaq === 2" x-transition class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                        Anda dapat memilih tenaga medis pada bagian Tenaga Medis lalu klik tombol <strong>Pilih Jadwal</strong>, atau langsung mengisi formulir <strong>Pendaftaran Pasien Online</strong> di bagian bawah halaman ini untuk mendapatkan nomor antrean digital secara instan.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                    <button @click="activeFaq = activeFaq === 3 ? null : 3" class="w-full p-5 text-left font-semibold text-slate-900 dark:text-white flex items-center justify-between text-sm sm:text-base">
+                        <span class="flex items-center gap-3"><span class="text-brand-500 font-mono">03</span> Kapan jadwal operasional dan hari libur klinik?</span>
+                        <i class="fa-solid fa-plus transition-transform duration-200" :class="activeFaq === 3 ? 'rotate-45 text-brand-500' : ''"></i>
+                    </button>
+                    <div x-show="activeFaq === 3" x-transition class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                        Klinik Sehat Nusantara beroperasi setiap hari <strong>Senin hingga Sabtu pukul 08.00 – 20.00 WIB</strong>. Pada hari Minggu dan Hari Libur Nasional, layanan poliklinik reguler tutup.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                    <button @click="activeFaq = activeFaq === 4 ? null : 4" class="w-full p-5 text-left font-semibold text-slate-900 dark:text-white flex items-center justify-between text-sm sm:text-base">
+                        <span class="flex items-center gap-3"><span class="text-brand-500 font-mono">04</span> Dokumen apa saja yang harus dibawa saat kunjungan?</span>
+                        <i class="fa-solid fa-plus transition-transform duration-200" :class="activeFaq === 4 ? 'rotate-45 text-brand-500' : ''"></i>
+                    </button>
+                    <div x-show="activeFaq === 4" x-transition class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                        Harap membawa <strong>KTP asli / Kartu Identitas Anak (KIA)</strong>, <strong>Bukti Tiket Antrean Digital</strong> dari website ini, serta <strong>Kartu BPJS Kesehatan</strong> (atau aplikasi Mobile JKN) bagi pasien peserta BPJS.
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                    <button @click="activeFaq = activeFaq === 5 ? null : 5" class="w-full p-5 text-left font-semibold text-slate-900 dark:text-white flex items-center justify-between text-sm sm:text-base">
+                        <span class="flex items-center gap-3"><span class="text-brand-500 font-mono">05</span> Berapa hari sebelumnya pendaftaran online dapat dilakukan?</span>
+                        <i class="fa-solid fa-plus transition-transform duration-200" :class="activeFaq === 5 ? 'rotate-45 text-brand-500' : ''"></i>
+                    </button>
+                    <div x-show="activeFaq === 5" x-transition class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                        Pendaftaran pasien online dapat dilakukan mulai hari ini hingga maksimal 14 hari ke depan untuk jadwal kunjungan hari Senin sampai Sabtu.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pendaftaran Pasien Online Section & Form -->
+        <section id="pendaftaran" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200 dark:border-slate-700">
+                <!-- Header -->
+                <div class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-6">
+                    <span class="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest">Pendaftaran Digital</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Pendaftaran Pasien Online</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">Isi data dengan lengkap dan valid untuk mendapatkan nomor antrean kunjungan klinik.</p>
+
+                    <!-- Step Indicator -->
+                    <div class="flex items-center gap-4 mt-6">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                            <span class="text-xs font-bold text-slate-900 dark:text-white">Isi Data</span>
+                        </div>
+                        <div class="w-12 h-0.5 bg-slate-200 dark:bg-slate-700"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold flex items-center justify-center">2</span>
+                            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Pilih Jadwal</span>
+                        </div>
+                        <div class="w-12 h-0.5 bg-slate-200 dark:bg-slate-700"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold flex items-center justify-center">3</span>
+                            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Dapatkan Antrean</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Submit Handler -->
+                <form @submit.prevent="submitRegistration()" class="space-y-8" id="registrationForm">
+                    <p x-show="storageError" x-text="storageError" role="alert" class="p-3 rounded-xl bg-rose-50 text-rose-700 text-sm"></p>
+                    <!-- Global Error Banner if validation fails -->
+                    <template x-if="hasSubmitted && Object.keys(errors).length > 0">
+                        <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2 shadow-sm animate-pulse">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500 text-base"></i>
+                            <span>Mohon lengkapi atau perbaiki semua persyaratan pendaftaran yang belum sesuai di bawah ini!</span>
+                        </div>
+                    </template>
+
+                    <!-- Step 1: Data Identitas Pasien -->
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <span class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 text-xs flex items-center justify-center font-bold">01</span>
+                            Data Identitas Pasien
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Pastikan data sesuai dengan KTP / Kartu Keluarga pasien.</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Nama Lengkap -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nama Lengkap *</label>
+                                <input type="text" x-model="form.nama" @input="validateField('nama')" placeholder="Nama Lengkap sesuai KTP/KK" 
+                                    :class="errors.nama ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                <template x-if="errors.nama">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.nama"></p>
+                                </template>
+                                <template x-if="!errors.nama">
+                                    <p class="text-[10px] text-slate-400 mt-1">Nama lengkap hanya boleh berisi huruf dan spasi (min. 3 karakter).</p>
+                                </template>
+                            </div>
+
+                            <!-- NIK -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">NIK * <span class="text-[10px] text-slate-400 font-normal float-right" x-text="form.nik.length + '/16 digit'"></span></label>
+                                <input type="text" x-model="form.nik" @input="validateField('nik')" maxlength="16" placeholder="Masukkan 16 digit NIK" 
+                                    :class="errors.nik ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                <template x-if="errors.nik">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.nik"></p>
+                                </template>
+                                <template x-if="!errors.nik">
+                                    <p class="text-[10px] text-slate-400 mt-1">NIK harus tepat 16 digit angka.</p>
+                                </template>
+                            </div>
+
+                            <!-- Tanggal Lahir -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Tanggal Lahir *</label>
+                                <input type="date" x-model="form.tanggalLahir" @change="validateField('tanggalLahir')" :max="todayDate" 
+                                    :class="errors.tanggalLahir ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                <template x-if="errors.tanggalLahir">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.tanggalLahir"></p>
+                                </template>
+                                <template x-if="!errors.tanggalLahir">
+                                    <p class="text-[10px] text-slate-400 mt-1">Pilih tanggal lahir pasien yang valid.</p>
+                                </template>
+                            </div>
+
+                            <p x-show="patientAge !== null" x-text="'Usia pasien: ' + patientAge + ' tahun'" class="text-xs text-brand-600 dark:text-brand-300 font-semibold sm:col-span-2"></p>
+
+                            <!-- Jenis Kelamin -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Jenis Kelamin *</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer text-xs transition" :class="form.jenisKelamin === 'Laki-laki' ? 'border-brand-500 bg-brand-50/40 dark:bg-brand-950/30' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'">
+                                        <input type="radio" name="jk" value="Laki-laki" x-model="form.jenisKelamin" @change="validateField('jenisKelamin')" class="text-brand-600"> Laki-laki
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer text-xs transition" :class="form.jenisKelamin === 'Perempuan' ? 'border-brand-500 bg-brand-50/40 dark:bg-brand-950/30' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'">
+                                        <input type="radio" name="jk" value="Perempuan" x-model="form.jenisKelamin" @change="validateField('jenisKelamin')" class="text-brand-600"> Perempuan
+                                    </label>
+                                </div>
+                                <template x-if="errors.jenisKelamin">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.jenisKelamin"></p>
+                                </template>
+                            </div>
+
+                            <!-- Nomor HP -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nomor HP *</label>
+                                <input type="tel" x-model="form.hp" @input="validateField('hp')" placeholder="Contoh: 081234567890" 
+                                    :class="errors.hp ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                <template x-if="errors.hp">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.hp"></p>
+                                </template>
+                                <template x-if="!errors.hp">
+                                    <p class="text-[10px] text-slate-400 mt-1">Awalan 08 / 62 (10-14 digit angka).</p>
+                                </template>
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email (Opsional)</label>
+                                <input type="email" x-model="form.email" @input="validateField('email')" placeholder="Contoh: nama@gmail.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                                <p class="text-[10px] text-slate-400 mt-1">Untuk pengiriman tiket konfirmasi email.</p>
+                                <p x-show="errors.email" x-text="errors.email" class="text-[11px] text-rose-500 mt-1 font-medium"></p>
+                            </div>
+                        </div>
+
+                        <!-- Jenis Penjamin Layanan -->
+                        <div class="mt-6">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Jenis Penjamin Layanan *</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div @click="form.penjamin = 'Mandiri'; validateField('penjamin')" :class="form.penjamin === 'Mandiri' ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/30' : 'border-slate-300 dark:border-slate-700'" class="p-4 rounded-xl border cursor-pointer transition">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-bold text-slate-900 dark:text-white">Pasien Umum / Mandiri</span>
+                                        <input type="radio" value="Mandiri" x-model="form.penjamin" class="text-brand-600">
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 mt-1">Pembayaran langsung di klinik</p>
+                                </div>
+                                <div @click="form.penjamin = 'BPJS'; validateField('penjamin')" :class="form.penjamin === 'BPJS' ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-950/30' : 'border-slate-300 dark:border-slate-700'" class="p-4 rounded-xl border cursor-pointer transition">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-bold text-slate-900 dark:text-white">BPJS Kesehatan (FKTP)</span>
+                                        <input type="radio" value="BPJS" x-model="form.penjamin" class="text-brand-600">
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 mt-1">Wajib menyertakan no. Kartu BPJS</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No BPJS Input if BPJS selected -->
+                        <div x-show="form.penjamin === 'BPJS'" x-transition class="mt-4">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nomor Kartu BPJS Kesehatan (13 Digit) *</label>
+                            <input type="text" x-model="form.noBpjs" @input="validateField('noBpjs')" maxlength="13" placeholder="000xxxxxxxxxx" 
+                                :class="errors.noBpjs ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                            <template x-if="errors.noBpjs">
+                                <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.noBpjs"></p>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Detail Kunjungan -->
+                    <div class="pt-6 border-t border-slate-200 dark:border-slate-700">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                            <span class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 text-xs flex items-center justify-center font-bold">02</span>
+                            Detail Kunjungan
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Pilih poliklinik, tenaga medis, tanggal kunjungan, dan tuliskan keluhan Anda.</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Poliklinik Selector -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Poliklinik *</label>
+                                <select x-model="form.poliklinik" @change="validateField('poliklinik')" 
+                                    :class="errors.poliklinik ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                    <option value="">Pilih layanan poliklinik</option>
+                                    <option value="Poli Umum">Poli Umum</option>
+                                    <option value="Poli Gigi">Poli Gigi</option>
+                                    <option value="Poli KIA">Poli KIA & Kebidanan</option>
+                                    <option value="Konsultasi Gizi">Konsultasi Gizi</option>
+                                </select>
+                                <template x-if="errors.poliklinik">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.poliklinik"></p>
+                                </template>
+                            </div>
+
+                            <!-- Dokter Selector -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Dokter / Tenaga Medis *</label>
+                                <select x-model="form.dokter" @change="validateField('dokter')" 
+                                    :class="errors.dokter ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                    <option value="">Pilih poliklinik terlebih dahulu</option>
+                                    <template x-for="doc in availableDoctorsForForm" :key="doc.id">
+                                        <option :value="doc.name" x-text="doc.name + ' (' + doc.poli + ')'"></option>
+                                    </template>
+                                </select>
+                                <template x-if="errors.dokter">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.dokter"></p>
+                                </template>
+                            </div>
+
+                            <!-- Tanggal Kunjungan -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Tanggal Kunjungan *</label>
+                                <input type="date" x-model="form.tanggalKunjungan" @change="validateField('tanggalKunjungan')" :min="todayDate" :max="maxDate" 
+                                    :class="errors.tanggalKunjungan ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                                <template x-if="errors.tanggalKunjungan">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.tanggalKunjungan"></p>
+                                </template>
+                                <template x-if="!errors.tanggalKunjungan">
+                                    <p class="text-[10px] text-slate-400 mt-1">Paling cepat hari ini s.d 14 hari ke depan (Minggu tutup).</p>
+                                </template>
+                            </div>
+
+                            <!-- Keluhan -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keluhan * <span class="text-[10px] text-slate-400 font-normal float-right" x-text="form.keluhan.length + '/200 karakter'"></span></label>
+                                <textarea x-model="form.keluhan" @input="validateField('keluhan')" rows="3" maxlength="200" placeholder="Tuliskan keluhan atau gejala yang dirasakan..." 
+                                    :class="errors.keluhan ? 'border-rose-500 bg-rose-50/20' : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900'" 
+                                    class="w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none transition"></textarea>
+                                <template x-if="errors.keluhan">
+                                    <p class="text-[11px] text-rose-500 mt-1 font-medium" x-text="errors.keluhan"></p>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox Persetujuan -->
+                        <div class="mt-6">
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" x-model="form.setuju" @change="validateField('setuju')" class="mt-1 rounded text-brand-600 focus:ring-brand-500">
+                                <span class="text-xs text-slate-600 dark:text-slate-300">
+                                    Saya menyatakan bahwa seluruh data yang diisi adalah benar, sesuai dengan identitas kependudukan, dan menyetujui penggunaan data untuk keperluan layanan medis di Klinik Sehat Nusantara. *
+                                </span>
+                            </label>
+                            <template x-if="errors.setuju">
+                                <p class="text-[11px] text-rose-500 mt-1 font-medium ml-6" x-text="errors.setuju"></p>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-6 border-t border-slate-200 dark:border-slate-700">
+                        <button type="submit" class="w-full py-4 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2">
+                            Proses Pendaftaran & Ambil Antrean <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <p class="text-[11px] text-center text-slate-400 mt-3">
+                            <i class="fa-solid fa-shield-halved mr-1"></i> Data Anda terlindungi dan hanya digunakan untuk pelayanan klinik.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-hospital text-base"></i>
+                        </div>
+                        <span class="text-base font-bold text-white">Klinik Sehat Nusantara</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        Memberikan layanan kesehatan keluarga yang mudah diakses, profesional, dan terpercaya untuk masyarakat Kediri.
+                    </p>
+                    <p class="text-xs text-brand-400 font-medium"><i class="fa-solid fa-circle-check mr-1"></i> Melayani Peserta BPJS Kesehatan</p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Jam Operasional</h4>
+                    <p class="mb-2"><strong class="text-slate-200">Senin – Sabtu</strong><br>08.00 - 20.00 WIB</p>
+                    <p class="text-rose-400 font-medium">Minggu & Libur Nasional<br>Tutup</p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Kontak & Lokasi</h4>
+                    <p class="mb-2"><i class="fa-solid fa-location-dot text-brand-400 mr-2"></i> Jl. Tugas UTS Kelompok No. 01, Kota Kediri, Jawa Timur</p>
+                    <p><i class="fa-solid fa-phone text-brand-400 mr-2"></i> +62 354 688 0777</p>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-500">
+                <p>&copy; 2026 Klinik Sehat Nusantara. Kelompok - 1.</p>
+                <p class="mt-2 sm:mt-0">Pelayanan Kesehatan Keluarga Kediri <span class="mx-2">•</span> <a href="admin.html" class="underline hover:text-white">Dashboard Admin (Demo)</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- 1. Digital Queue Modal -->
+    <div x-show="modalQueueOpen" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+        <div @click.outside="modalQueueOpen = false" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 space-y-6 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-300 mx-auto flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-ticket"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Ambil Nomor Antrean Digital</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Pilih poliklinik tujuan untuk mendapatkan nomor antrean hari ini.</p>
+            </div>
+
+            <div class="space-y-3">
+                <button @click="generateQuickQueue('Poli Umum')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-brand-50 dark:hover:bg-slate-700/50 font-semibold text-xs text-slate-900 dark:text-white flex items-center justify-between transition">
+                    <span>Poli Umum (dr. Arka Mahardika)</span>
+                    <i class="fa-solid fa-arrow-right text-brand-500"></i>
+                </button>
+                <button @click="generateQuickQueue('Poli Gigi')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-brand-50 dark:hover:bg-slate-700/50 font-semibold text-xs text-slate-900 dark:text-white flex items-center justify-between transition">
+                    <span>Poli Gigi (drg. Kirana Maharani)</span>
+                    <i class="fa-solid fa-arrow-right text-brand-500"></i>
+                </button>
+                <button @click="generateQuickQueue('Poli KIA')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-brand-50 dark:hover:bg-slate-700/50 font-semibold text-xs text-slate-900 dark:text-white flex items-center justify-between transition">
+                    <span>Poli KIA & Kebidanan (Bdn. Larasati)</span>
+                    <i class="fa-solid fa-arrow-right text-brand-500"></i>
+                </button>
+            </div>
+
+            <button @click="modalQueueOpen = false" class="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Service Detail Modal -->
+    <div x-show="serviceModalOpen" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+        <div @click.outside="serviceModalOpen = false" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-300 text-xs font-bold" x-text="activeService.title"></span>
+                <button @click="serviceModalOpen = false" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white" x-text="activeService.title"></h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" x-text="activeService.desc"></p>
+            <div class="pt-4">
+                <button @click="serviceModalOpen = false; location.href='#pendaftaran'" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs transition shadow">
+                    Daftar Layanan Ini
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Success Registration / Queue Result Modal -->
+    <div x-show="modalSuccessOpen" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 space-y-6 text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 text-xs font-bold">Pendaftaran Berhasil</span>
+                <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-2">Nomor Antrean Anda</h3>
+                <div class="my-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span class="text-4xl font-mono font-extrabold text-brand-600 dark:text-brand-400" x-text="queueResultNumber"></span>
+                    <p class="text-xs text-slate-500 mt-1" x-text="queueResultPoli"></p>
+                    <div x-show="registrationResult" class="mt-4 text-left text-xs space-y-2 text-slate-600 dark:text-slate-300">
+                        <p><strong>Nama:</strong> <span x-text="registrationResult?.nama"></span></p>
+                        <p><strong>NIK:</strong> <span x-text="registrationResult?.nik ? '************' + registrationResult.nik.slice(-4) : '-'"></span></p>
+                        <p><strong>Tanggal lahir:</strong> <span x-text="registrationResult?.tanggalLahir"></span></p>
+                        <p><strong>Jenis kelamin:</strong> <span x-text="registrationResult?.jenisKelamin"></span></p>
+                        <p><strong>HP:</strong> <span x-text="registrationResult?.hp"></span></p>
+                        <p x-show="registrationResult?.email"><strong>Email:</strong> <span x-text="registrationResult?.email"></span></p>
+                        <p><strong>Usia:</strong> <span x-text="registrationResult?.usia + ' tahun'"></span></p>
+                        <p><strong>Poliklinik:</strong> <span x-text="registrationResult?.poliklinik"></span></p>
+                        <p><strong>Dokter:</strong> <span x-text="registrationResult?.dokter"></span></p>
+                        <p><strong>Tanggal kunjungan:</strong> <span x-text="registrationResult?.tanggalKunjungan"></span></p>
+                        <p><strong>Status:</strong> <span x-text="registrationResult?.status"></span></p>
+                    </div>
+                    <p x-show="!registrationResult" class="text-[11px] text-slate-400 mt-1">Antrean cepat (tanpa data pendaftaran pasien).</p>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Simpan atau screenshot nomor antrean ini dan tunjukkan kepada petugas loket klinik saat kedatangan.</p>
+            </div>
+
+            <button @click="modalSuccessOpen = false" class="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs hover:bg-slate-800 transition">
+                Selesai / Tutup
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
