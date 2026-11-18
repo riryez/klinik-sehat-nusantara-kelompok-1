@@ -1,4 +1,5 @@
 KLINIK SEHAT NUSANTARA — SIMULASI CPMK1 / CPMK2
+(https://6afd88219fbba29a33bcfe90--peppy-banoffee-197e7b.netlify.app/)
 
 CARA 1 (VS CODE LIVE SERVER)
 1. Ekstrak ZIP. Jangan buka index.html saat masih dalam ZIP.
